@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  mongodb:
+    image: mongo:3.6.8
+    ports:
+      - "27017"
+    networks:
+      - dbnet
+    volumes:
+      - dbdata:/mnt/mongodb
+    command: mongod --dbpath /mnt/mongodb --logpath /mnt/mongodb/log --noauth
+
+  redis:
+    image: redis
+    networks:
+      - dbnet
+    
+  appdock:
+    build: ./Dockerfiles/appdock/
+    ports:
+      - "80:8080"
+    networks:
+      - dbnet
+    depends_on:
+      - mongodb
+      - redis
+    links:
+      - mongodb
+      - redis
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - REDIS_IP=redis
+    tty: true
+    
+networks:
+  dbnet:
+
+volumes:
+  dbdata:
