@@ -1,6 +1,6 @@
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-    host: 'https://elastic:IAqTiOjNZ8ENh3nskZ2zwQZf@a0abacf5a780498fbefcd6adaca25f2d.us-central1.gcp.cloud.es.io:9243',
+    host: 'https://elastic:TBFrEK42ijJt4fWU4CsVobxY@a0abacf5a780498fbefcd6adaca25f2d.us-central1.gcp.cloud.es.io:9243',
     log: 'trace'
 });
 
@@ -35,7 +35,8 @@ function searchSimilar(product) {
                 match: {
                     "productName": product.productName
                 }
-            }
+            },
+            size: 5
         }
     });
 }

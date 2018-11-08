@@ -23,8 +23,10 @@ router.get('/', async function(req, res, next) {
         productUrl : decodeURI(req.query.productUrl)
     }).then((result)=>{
        console.log(result.hits.hits);
-        for (const hit of result.hits.hits) {
-            results.push(hit._source)
+       for (const hit of result.hits.hits) {
+            if(hit!==null) {
+                results.push(hit._source)
+            }
         }
         console.log(results);
         res.json(results);
